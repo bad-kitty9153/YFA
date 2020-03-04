@@ -12,5 +12,10 @@
 			"run_at": "document_start"
 		}
 	],
+	"icons": {
+		"16": "Icons/16w/YFA Icon.png",
+		"48": "Icons/48w/YFA Icon.png",
+		"128": "Icons/128w/YFA Icon.png"
+	},
 	"manifest_version": 2
 }
