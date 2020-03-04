@@ -4,11 +4,9 @@ document.onreadystatechange = function () {
 
 window.addEventListener("yt-navigate-finish", startPeriodicScan);
 
-var addZeroPadding = function(n) {
-	
+function addZeroPadding(n) {
 	return n < 10 ? "0" + n : n;
-	
-};
+}
 
 function showEndTimes() {
 	if (document.readyState === 'complete') {
@@ -31,8 +29,8 @@ function showEndTimes() {
 			var curDate = new Date();
 			var endDate = new Date();
 			endDate.setMinutes(curDate.getMinutes() + totalMinutes);
-			var endMinute = addZeroPadding(endDate.getMinutes());
 			
+			var endMinute = addZeroPadding(endDate.getMinutes());
 			var endHour = addZeroPadding(endDate.getHours());
 			
 			var endString = endHour + ":" + endMinute;
