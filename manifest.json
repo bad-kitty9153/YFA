@@ -1,0 +1,16 @@
+{
+	"name": "Youtube Finished At",
+	"version": "1.0",
+	"description": "Shows the time when you will finish a Youtube video!",
+	"permissions": [
+		"https://*.youtube.com/*"
+	],
+	"content_scripts": [
+		{
+			"matches": ["https://*.youtube.com/*"],
+			"js": ["content.js"],
+			"run_at": "document_start"
+		}
+	],
+	"manifest_version": 2
+}
