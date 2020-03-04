@@ -2,7 +2,13 @@ document.onreadystatechange = function () {
 	startPeriodicScan();
 }
 
-window.addEventListener("yt-navigate-finish", startPeriodicScan)
+window.addEventListener("yt-navigate-finish", startPeriodicScan);
+
+var addZeroPadding = function(n) {
+	
+	return n < 10 ? "0" + n : n;
+	
+};
 
 function showEndTimes() {
 	if (document.readyState === 'complete') {
@@ -25,18 +31,13 @@ function showEndTimes() {
 			var curDate = new Date();
 			var endDate = new Date();
 			endDate.setMinutes(curDate.getMinutes() + totalMinutes);
-			var endMinute = endDate.getMinutes();
-			if (endMinute < 10) {
-				endMinute = "0" + endMinute;
-			}
-			var endHour = endDate.getHours();
-			if (endHour < 10) {
-				endHour = "0" + endHour;
-			}
+			var endMinute = addZeroPadding(endDate.getMinutes());
+			
+			var endHour = addZeroPadding(endDate.getHours());
 			
 			var endString = endHour + ":" + endMinute;
 			
-			videoTimes[i].innerHTML = durationString + " | end: " + endString;
+			videoTimes[i].textContent = durationString + " | end: " + endString;
 		}
 	}
 }
