@@ -1,6 +1,35 @@
-document.onreadystatechange = function () {
+const INTERVAL_TIME = 15000;
+let interval_id = null;
+
+// TODO: Update every whole minute...?
+document.addEventListener('DOMContentLoaded', function() {
+	
+	// thank you, mdn! https://developer.mozilla.org/en-US/docs/Web/API/MutationObserver
+	// Select the node that will be observed for mutations
+	const targetNode = document.body;
+
+	// Options for the observer (which mutations to observe)
+	const config = { attributes: true, childList: true, subtree: true };
+
+	// Callback function to execute when mutations are observed
+	const callback = function(mutationsList, observer) {
+		
+		if (interval_id) {
+			clearInterval(interval_id);
+			interval_id = setInterval(showEndTimes, INTERVAL_TIME);
+		}
+			
+		showEndTimes();
+	};
+
+	// Create an observer instance linked to the callback function
+	const observer = new MutationObserver(callback);
+
+	// Start observing the target node for configured mutations
+	observer.observe(targetNode, config);
+	
 	startPeriodicScan();
-}
+}, false);
 
 window.addEventListener("yt-navigate-finish", startPeriodicScan);
 
@@ -41,7 +70,7 @@ function showEndTimes() {
 }
 
 function startPeriodicScan() {
-	if(!interval) {
-		var interval = setInterval(showEndTimes, 2000);
+	if(!interval_id) {
+		interval_id = setInterval(showEndTimes, INTERVAL_TIME);
 	}
 }
