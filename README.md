@@ -11,4 +11,8 @@ Forgive the terrible code, I was sleep deprived and emotional when I wrote this 
 * Go to `chrome://extensions`.
 * Enable Developer mode.
 * Click `Load unpacked`.
-* Browse to YFA folder and click open.
+* Browse to YFA folder and click open.  
+
+---
+
+Icons made by <a href="https://www.flaticon.com/authors/freepik" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon"> www.flaticon.com</a>
