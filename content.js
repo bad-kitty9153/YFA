@@ -1,9 +1,11 @@
 const INTERVAL_TIME = 15000;
-let interval_id = null;
+const INITIAL_TIMEOUT = 150;
+let intervalId = null;
+let initialTimeoutId = null;
 
 /* TODO: 
 	- Update every whole minute...?
-	- Batch updates, showEndTimes() is now executed once for each element (~ 160 times on first pageload), enable the "running!" log to see in action.
+	- Batch updates, showEndTimes() is executed much less now, but still unnecessarily much, particularly on scrolling
 	- Hovering over thumbnails causes 2 calls to showEndTimes() on entering and 1 on exiting.
 */
 
@@ -14,14 +16,25 @@ document.addEventListener('DOMContentLoaded', function() {
 
 	// Options for the observer (which mutations to observe)
 	const config = { attributes: false, childList: true, subtree: true };
+	
+	let preShowEndTimes = function() {
+		if (!intervalId) {
+			intervalId = setInterval(showEndTimes, INTERVAL_TIME);
+		}
+		showEndTimes();
+	};
 
 	// Callback function to execute when mutations are observed
 	const callback = function(mutationsList, observer) {
-		if (interval_id) {
-			clearInterval(interval_id);
-			interval_id = setInterval(showEndTimes, INTERVAL_TIME);
+		if (initialTimeoutId) {
+			clearTimeout(initialTimeoutId);
 		}
-		showEndTimes();
+		
+		if (intervalId) {
+			clearInterval(intervalId);
+		}
+		
+		initialTimeoutId = setTimeout(preShowEndTimes, INITIAL_TIMEOUT);
 	};
 
 	// Create an observer instance linked to the callback function
@@ -66,8 +79,8 @@ function showEndTimes() {
 }
 
 function startPeriodicScan() {
-	if(!interval_id) {
-		interval_id = setInterval(showEndTimes, INTERVAL_TIME);
+	if(!intervalId) {
+		intervalId = setInterval(showEndTimes, INTERVAL_TIME);
 	}
 }
 
