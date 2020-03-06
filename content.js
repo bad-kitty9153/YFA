@@ -55,7 +55,9 @@ function showEndTimes() {
 	for(var i = 0; i < videoTimes.length; i++) {
 		var durationString = videoTimes[i].innerHTML.split(" | ")[0]; // prevent appending endlessly
 		var durationSplit = durationString.split(":");
-		if (durationSplit.length > 2) { // duration format xx:xx:xx
+		if (durationSplit.length === 1) { // no colon: probably LIVE. Skip.
+			continue;
+		} else if (durationSplit.length > 2) { // duration format xx:xx:xx
 			var durationHours = durationSplit[0]
 			var durationMinutes = durationSplit[1];
 			var durationSeconds = durationSplit[2];
