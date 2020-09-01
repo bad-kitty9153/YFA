@@ -50,33 +50,28 @@ window.addEventListener("yt-navigate-finish", startPeriodicScan);
 
 function showEndTimes() {
 	//console.log("running!");
-	var videoTimes = document.querySelectorAll("span.ytd-thumbnail-overlay-time-status-renderer");
+	let videoTimes = document.querySelectorAll("span.ytd-thumbnail-overlay-time-status-renderer");
 	
-	for(var i = 0; i < videoTimes.length; i++) {
-		var durationString = videoTimes[i].innerHTML.split(" | ")[0]; // prevent appending endlessly
-		var durationSplit = durationString.split(":");
+	for (let i = 0; i < videoTimes.length; i++) {
+		
+		let durationString = videoTimes[i].innerHTML.split(" | ")[0]; // prevent appending endlessly
+		let durationSplit = durationString.split(":");
+		
+		let totalMinutes = 0;
+		
 		if (durationSplit.length === 1) { // no colon: probably LIVE. Skip.
 			continue;
 		} else if (durationSplit.length > 2) { // duration format xx:xx:xx
-			var durationHours = durationSplit[0]
-			var durationMinutes = durationSplit[1];
-			var durationSeconds = durationSplit[2];
+			totalMinutes = parseInt(durationSplit[0]) * 60 + parseInt(durationSplit[1]) + Math.ceil(parseInt(durationSplit[2]) / 60);
 		} else { // duration format xx:xx
-			var durationHours = 0;
-			var durationMinutes = durationSplit[0];
-			var durationSeconds = durationSplit[1];
+			totalMinutes = parseInt(durationSplit[0]) + Math.ceil(parseInt(durationSplit[1]) / 60);
 		}
 		
-		var totalMinutes = parseInt(durationHours * 60) + parseInt(durationMinutes) + parseInt(Math.ceil(durationSeconds / 60));
-		var curDate = new Date();
-		var endDate = new Date();
-		endDate.setMinutes(curDate.getMinutes() + totalMinutes);
+		let endDate = new Date();
 		
-		var endMinute = addZeroPadding(endDate.getMinutes());
-		var endHour = addZeroPadding(endDate.getHours());
+		endDate.setMinutes(endDate.getMinutes() + totalMinutes);
 		
-		var endString = endHour + ":" + endMinute;
-		videoTimes[i].textContent = durationString + " | end: " + endString;
+		videoTimes[i].textContent = durationString + " | end: " + addZeroPadding(endDate.getHours()) + ":" + addZeroPadding(endDate.getMinutes());
 	}
 }
 
